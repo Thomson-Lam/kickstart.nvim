@@ -437,6 +437,19 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
+      -- LSP workspace symbol search
+      vim.keymap.set('n', '<leader>ws', builtin.lsp_workspace_symbols, { desc = 'LSP Workspace Symbols' })
+
+      -- LSP Dynamic workspace symbol search
+      vim.keymap.set('n', '<leader>ds', builtin.lsp_dynamic_workspace_symbols, { desc = 'LSP Dynamic Workspace Symbols' })
+
+      -- find all symbols in the current document
+      vim.keymap.set('n', '<leader>cs', builtin.lsp_document_symbols, { desc = 'Open Current Document Symbols' })
+
+      -- NOTE: This did not qute work as I expected, because not all LSP functionality are fuzzy find.
+      -- using vim.keymap for finding lsp definition
+      -- find definitions for a symbol
+
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
         -- You can pass additional configuration to Telescope to change the theme, layout, etc.
@@ -672,7 +685,7 @@ require('lazy').setup({
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         -- clangd = {},
-        -- gopls = {},
+        gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -721,7 +734,8 @@ require('lazy').setup({
 
       require('mason-lspconfig').setup {
         ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
-        automatic_installation = false,
+        automatic_installation = false, -- set to false because we are using mason-tool-installer
+        automatic_enable = false, -- no need to enable because we are using handlers
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
