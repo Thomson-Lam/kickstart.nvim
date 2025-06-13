@@ -784,10 +784,24 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
+        python = { 'isort', 'black' },
         --
+
+        rust = { 'rustfmt' },
+
+        --- Web dev
+        --- NOTE: The css-beautify and html-beautify are installed together with js-beautify using npm.
+        --- For current projects, you will use Tailwind, so no need for css-beautify.
+        --- web dev projects - `npm install --save-dev js-beautify prettierd`.
+
+        html = { 'html_beautify', 'rustywind' },
+
+        markdown = { 'markdownfmt' }, -- installed globally using Go; TODO: Troubleshoot
+
         -- You can use 'stop_after_first' to run the first available formatter from the list
-        -- javascript = { "prettierd", "prettier", stop_after_first = true },
+        javascript = { 'prettierd', 'prettier', stop_after_first = true },
+        javascriptreact = { 'prettierd', 'html_beautify', 'rustywind' },
+        typescriptreact = { 'prettierd', 'html_beautify', 'rustywind' },
       },
     },
   },
