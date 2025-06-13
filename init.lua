@@ -191,8 +191,14 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 -- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
 -- Keybinds to make split navigation easier.
---  Use CTRL+<hjkl> to switch between windows
---
+
+-- NOTE: Splitting windows. For now, spearate all leader for Telescope and LSP instead and use <C> for
+-- a minor feature instead.
+-- TODO: Consider using the leader for splitting windows instead later.
+vim.keymap.set('n', '<C-s>', ':split<CR>', { desc = 'Split Horizontally' })
+vim.keymap.set('n', '<C-v>', ':vsplit<CR>', { desc = 'Split Vertically' })
+
+--  NOTE: Use CTRL+<hjkl> to switch between windows
 --  See `:help wincmd` for a list of all window commands
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
