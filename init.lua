@@ -215,6 +215,24 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
+-- BUG: Copilot autocomplete toggle:
+-- 1) the toggle does not work, 2) excluding default source outside of blink for blink-copilot does not disable autocomplete, 3)
+--[[vim.api.nvim_create_user_command('Ac', function()
+  require('utils.blink_toggle').enable()
+end, {})
+vim.api.nvim_create_user_command('Nac', function()
+  require('utils.blink_toggle').disable()
+end, {})
+--]]
+
+-- (optional) keymaps
+vim.keymap.set('n', '<leader>cao', function()
+  vim.cmd 'BlinkCopilotOn'
+end, { desc = 'Copilot ON' })
+vim.keymap.set('n', '<leader>caf', function()
+  vim.cmd 'BlinkCopilotOff'
+end, { desc = 'Copilot OFF' })
+
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
 --  See `:help vim.hl.on_yank()`
@@ -815,8 +833,8 @@ require('lazy').setup({
 
   { -- Autocompletion
     'saghen/blink.cmp',
-    --optional = true,
-    event = 'VimEnter',
+    --optional = true, -- for toggling all autocompletion features
+    event = 'VeryLazy', -- NOTE: not the most optimal but starts when UI ready before insert mode
     version = '1.*',
     dependencies = {
       -- Snippet Engine
@@ -892,7 +910,7 @@ require('lazy').setup({
       },
 
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'lazydev', 'copilot' },
+        default = { 'lsp', 'path', 'snippets', 'lazydev' },
         providers = {
           lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
           copilot = {
@@ -921,6 +939,7 @@ require('lazy').setup({
   },
   {
     'zbirenbaum/copilot.lua',
+    -- optional = true, -- for manual activation for all AI features
     cmd = 'Copilot',
     event = 'InsertEnter', -- start copilot automatically
     opts = {
