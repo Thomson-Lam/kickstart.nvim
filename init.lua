@@ -814,6 +814,7 @@ require('lazy').setup({
 
   { -- Autocompletion
     'saghen/blink.cmp',
+    optional = true,
     event = 'VimEnter',
     version = '1.*',
     dependencies = {
@@ -843,6 +844,7 @@ require('lazy').setup({
         },
         opts = {},
       },
+      'fang2hou/blink-copilot',
       'folke/lazydev.nvim',
     },
     --- @module 'blink.cmp'
@@ -889,9 +891,15 @@ require('lazy').setup({
       },
 
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'lazydev' },
+        default = { 'lsp', 'path', 'snippets', 'lazydev', 'copilot' },
         providers = {
           lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
+          copilot = {
+            name = 'copilot',
+            module = 'blink-copilot',
+            score_offset = 100,
+            async = true,
+          },
         },
       },
 
@@ -910,7 +918,18 @@ require('lazy').setup({
       signature = { enabled = true },
     },
   },
-
+  {
+    'zbirenbaum/copilot.lua',
+    cmd = 'Copilot',
+    event = 'InsertEnter', -- start copilot automatically
+    opts = {
+      suggestion = { enabled = false },
+      panel = { enabled = false },
+    },
+    config = function()
+      require('copilot').setup {}
+    end,
+  },
   { -- You can easily change to a different colorscheme.
     -- Change the name of the colorscheme plugin below, and then
     -- change the command in the config to whatever the name of that colorscheme is.
