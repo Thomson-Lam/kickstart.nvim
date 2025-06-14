@@ -1,4 +1,5 @@
 --[[
+-- 
 
 =====================================================================
 ==================== READ THIS BEFORE CONTINUING ====================
@@ -814,7 +815,7 @@ require('lazy').setup({
 
   { -- Autocompletion
     'saghen/blink.cmp',
-    optional = true,
+    --optional = true,
     event = 'VimEnter',
     version = '1.*',
     dependencies = {
