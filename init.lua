@@ -863,7 +863,7 @@ require('lazy').setup({
         },
         opts = {},
       },
-      'fang2hou/blink-copilot',
+      --'fang2hou/blink-copilot',
       'folke/lazydev.nvim',
     },
     --- @module 'blink.cmp'
@@ -913,12 +913,12 @@ require('lazy').setup({
         default = { 'lsp', 'path', 'snippets', 'lazydev' },
         providers = {
           lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
-          copilot = {
+          --[[copilot = {
             name = 'copilot',
             module = 'blink-copilot',
             score_offset = -100,
             async = true,
-          },
+          },--]]
         },
       },
 
@@ -937,7 +937,7 @@ require('lazy').setup({
       signature = { enabled = true },
     },
   },
-  {
+  --[[{
     'zbirenbaum/copilot.lua',
     -- optional = true, -- for manual activation for all AI features
     cmd = 'Copilot',
@@ -949,9 +949,9 @@ require('lazy').setup({
     config = function()
       require('copilot').setup {}
     end,
-  },
+  },--]]
 
-  {
+  --[[{
     'CopilotC-Nvim/CopilotChat.nvim',
     dependencies = {
       { 'github/copilot.vim' }, -- or zbirenbaum/copilot.lua
@@ -962,7 +962,7 @@ require('lazy').setup({
       -- See Configuration section for options
     },
     -- See Commands section for default commands if you want to lazy load on them
-  },
+  },--]]
 
   { -- You can easily change to a different colorscheme.
     -- Change the name of the colorscheme plugin below, and then
