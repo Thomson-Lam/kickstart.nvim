@@ -221,7 +221,8 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
 
 -- NOTE: Buffer keymaps
-vim.keymap.set('n', '<S-l>', ':ls<CR>', { desc = 'List all buffers' })
+
+--vim.keymap.set('n', '<S-l>', ':ls<CR>', { desc = 'List all buffers' }) -- used for Snipe instead.
 vim.keymap.set('n', '<S-e>', ':enew<CR>', { desc = 'Open a new buffer' })
 vim.keymap.set('n', '<S-w>', ':bd<CR>', { desc = 'Close current buffer' })
 vim.keymap.set('n', '<S-n>', ':bn<CR>', { desc = 'Jump to next buffer' })
@@ -593,7 +594,7 @@ require('lazy').setup({
     'leath-dub/snipe.nvim',
     keys = {
       {
-        'gb',
+        '<S-l>',
         function()
           require('snipe').open_buffer_menu()
         end,
