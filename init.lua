@@ -503,6 +503,32 @@ require('lazy').setup({
     end,
   },
 
+  -- minimal file tree for only when you need it
+  {
+    'nvim-neo-tree/neo-tree.nvim',
+    --'nvim-neo-tree/neo-tree.nvim',
+    branch = '3.0',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      --'nvim-tree/nvim-web-devicons',
+      'MunifTanjim/nui.nvim',
+    },
+    lazy = false, -- neo tree lazy loads self
+    ---[[ @module 'neo-tree' @type neotree.Config? --]]
+    opts = {}, -- default for now
+  },
+
+  -- oil.nvim for files
+  {
+    'stevearc/oil.nvim',
+    config = function()
+      require('oil').setup {
+        default_file_explorer = true,
+        use_default_keymaps = true,
+      }
+    end,
+  },
+
   -- LSP Plugins
   {
     -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
