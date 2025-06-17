@@ -228,8 +228,9 @@ vim.keymap.set('n', '<S-w>', ':bd<CR>', { desc = 'Close current buffer' })
 vim.keymap.set('n', '<S-n>', ':bn<CR>', { desc = 'Jump to next buffer' })
 vim.keymap.set('n', '<S-p>', ':bp<CR>', { desc = 'Jump to previous buffer' })
 vim.keymap.set('n', '_', ':b#<CR>', { desc = 'Jump to last focused buffer' })
+vim.keymap.set('n', '<S-t>', ':term<CR>', { desc = 'Open a new terminal buffer' }) -- open term
 
--- NOTE: Tab keymaps
+-- TODO: Tab keymaps
 vim.keymap.set('n', '<C-b>', ':tabnew<CR>', { desc = 'Open new buffer in a new tab' }) -- open file in a new buffer
 
 -- [[ Basic Autocommands ]]
@@ -602,6 +603,17 @@ require('lazy').setup({
         desc = 'Open Snipe buffer menu',
       },
     },
+    config = function()
+      local snipe = require 'snipe'
+      snipe.setup {
+
+        hints = { -- TODO: Consider adding D?
+          dictionary = 'asfghl;wertyuiop', -- make sure this does not collide with nav and delete keymaps
+        },
+
+        navigate = { close_buffer = 'd' }, -- change nothing else but close buffer
+      }
+    end,
     opts = {},
   },
 
