@@ -1,5 +1,4 @@
 --[[
--- NOTE: Saved on June 14, use this as backup for the messy blink copilot set up.
 -- 
 
 =====================================================================
@@ -112,6 +111,9 @@ vim.o.mouse = 'a'
 -- Don't show the mode, since it's already in the status line
 vim.o.showmode = false
 
+-- relative line numbers for current window
+vim.wo.relativenumber = true
+
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
@@ -142,6 +144,11 @@ vim.o.timeoutlen = 300
 -- Configure how new splits should be opened
 vim.o.splitright = true
 vim.o.splitbelow = true
+
+-- NOTE:: Nvim-tree config; disable netrw
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+vim.opt.termguicolors = true -- set 24 bit color; optional
 
 -- Sets how neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`
@@ -498,6 +505,75 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sn', function()
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
       end, { desc = '[S]earch [N]eovim files' })
+    end,
+  },
+
+  -- minimal file tree for only when you need it
+  -- TODO: Check out mini.files later if you want to.
+
+  --NOTE: commented out neo-tree; using nvim-tree instead.
+
+  --[[ {
+    'nvim-neo-tree/neo-tree.nvim',
+    branch = '3.0',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      --'nvim-tree/nvim-web-devicons', -- optional icons for file tree 
+      'MunifTanjim/nui.nvim',
+    },
+    lazy = false, -- neo tree lazy loads self
+    ---[[ @module 'neo-tree' @type neotree.Config? 
+    opts = {}, -- default for now
+  }, --]]
+
+  {
+    'nvim-tree/nvim-tree.lua',
+    config = function()
+      require('nvim-tree').setup {
+        disable_netrw = true,
+        hijack_netrw = true,
+        respect_buf_cwd = true,
+        sync_root_with_cwd = true,
+        view = {
+          relativenumber = true,
+          float = {
+            enable = true,
+            open_win_config = function()
+              local screen_w = vim.opt.columns:get()
+              local screen_h = vim.opt.lines:get() - vim.opt.cmdheight:get()
+              local window_w = screen_w * 0.5
+              local window_h = screen_h * 0.8
+              local window_w_int = math.floor(window_w)
+              local window_h_int = math.floor(window_h)
+              local center_x = (screen_w - window_w) / 2
+              local center_y = ((vim.opt.lines:get() - window_h) / 2) - vim.opt.cmdheight:get()
+              return {
+                border = 'rounded',
+                relative = 'editor',
+                row = center_y,
+                col = center_x,
+                width = window_w_int,
+                height = window_h_int,
+              }
+            end,
+          },
+          width = function()
+            return math.floor(vim.opt.columns:get() * 0.8)
+          end,
+        },
+      }
+      vim.keymap.set('n', '<C-f>', ':NvimTreeToggle<CR>')
+    end,
+  },
+
+  -- oil.nvim for files
+  {
+    'stevearc/oil.nvim',
+    config = function()
+      require('oil').setup {
+        default_file_explorer = true,
+        use_default_keymaps = true,
+      }
     end,
   },
 
@@ -864,7 +940,7 @@ require('lazy').setup({
         },
         opts = {},
       },
-      'fang2hou/blink-copilot',
+      --'fang2hou/blink-copilot',
       'folke/lazydev.nvim',
     },
     --- @module 'blink.cmp'
@@ -914,12 +990,12 @@ require('lazy').setup({
         default = { 'lsp', 'path', 'snippets', 'lazydev' },
         providers = {
           lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
-          copilot = {
+          --[[copilot = {
             name = 'copilot',
             module = 'blink-copilot',
-            score_offset = 100,
+            score_offset = -100,
             async = true,
-          },
+          },--]]
         },
       },
 
@@ -938,7 +1014,7 @@ require('lazy').setup({
       signature = { enabled = true },
     },
   },
-  {
+  --[[{
     'zbirenbaum/copilot.lua',
     -- optional = true, -- for manual activation for all AI features
     cmd = 'Copilot',
@@ -950,9 +1026,9 @@ require('lazy').setup({
     config = function()
       require('copilot').setup {}
     end,
-  },
+  },--]]
 
-  {
+  --[[{
     'CopilotC-Nvim/CopilotChat.nvim',
     dependencies = {
       { 'github/copilot.vim' }, -- or zbirenbaum/copilot.lua
@@ -963,7 +1039,7 @@ require('lazy').setup({
       -- See Configuration section for options
     },
     -- See Commands section for default commands if you want to lazy load on them
-  },
+  },--]]
 
   { -- You can easily change to a different colorscheme.
     -- Change the name of the colorscheme plugin below, and then
@@ -1033,7 +1109,25 @@ require('lazy').setup({
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
+      ensure_installed = {
+        'bash',
+        'c',
+        'diff',
+        'html',
+        'lua',
+        'luadoc',
+        'markdown',
+        'markdown_inline',
+        'query',
+        'vim',
+        'vimdoc',
+        'tsx',
+        'javascript',
+        'typescript',
+        'python',
+        'yaml',
+        'json',
+      },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
@@ -1051,6 +1145,11 @@ require('lazy').setup({
     --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
     --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
     --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+  },
+  { -- nvim-ts-autotag for auto closing tags for HTML, JSX and TSX.
+    'windwp/nvim-ts-autotag',
+    --event = "LazyFile",
+    opts = {}, -- use default config right now; TODO: explore config for auto close if needed.
   },
 
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
