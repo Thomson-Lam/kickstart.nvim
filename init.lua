@@ -220,8 +220,16 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
 -- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
 
--- NOTE: Opening files in a new buffer
-vim.keymap.set('n', '<C-b>', ':tabnew<CR>', { desc = 'open new buffer' })
+-- NOTE: Buffer commands
+vim.keymap.set('n', '<S-l>', ':ls<CR>', { desc = 'List all buffers' })
+vim.keymap.set('n', '<S-e>', ':enew<CR>', { desc = 'Open a new buffer' })
+vim.keymap.set('n', '<S-w>', ':bd<CR>', { desc = 'Close current buffer' })
+vim.keymap.set('n', '<S-n>', ':bn<CR>', { desc = 'Jump to next buffer' })
+vim.keymap.set('n', '<S-p>', ':bp<CR>', { desc = 'Jump to previous buffer' })
+vim.keymap.set('n', '_', ':b#<CR>', { desc = 'Jump to last focused buffer' })
+
+-- NOTE: Tab commands
+vim.keymap.set('n', '<C-b>', ':tabnew<CR>', { desc = 'Open new buffer in a new tab' }) -- open file in a new buffer
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
