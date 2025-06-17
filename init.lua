@@ -220,6 +220,9 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
 -- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
 
+-- NOTE: Opening files in a new buffer
+vim.keymap.set('n', '<C-b>', ':tabnew<CR>', { desc = 'open new buffer' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -482,6 +485,8 @@ require('lazy').setup({
       -- NOTE: This did not qute work as I expected, because not all LSP functionality are fuzzy find.
       -- using vim.keymap for finding lsp definition
       -- find definitions for a symbol
+
+      vim.keymap.set('n', '<leader>fm', builtin.marks, { desc = '[F]ind Vim [M]arks' })
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
@@ -1103,6 +1108,9 @@ require('lazy').setup({
       --  Check out: https://github.com/echasnovski/mini.nvim
     end,
   },
+
+  -- TODO: Nvim-treesitter-objects
+
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
