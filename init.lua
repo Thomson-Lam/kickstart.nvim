@@ -576,7 +576,7 @@ require('lazy').setup({
           end,
         },
       }
-      vim.keymap.set('n', '<C-f>', ':NvimTreeToggle<CR>')
+      vim.keymap.set('n', '<C-f>', ':NvimTreeToggle<CR>', { desc = 'Toggle file tree' })
     end,
   },
 
@@ -588,6 +588,7 @@ require('lazy').setup({
         default_file_explorer = true,
         use_default_keymaps = true,
       }
+      vim.keymap.set('n', '<C-o>', ':Oil<CR>', { desc = 'Open Oil' })
     end,
   },
   {
