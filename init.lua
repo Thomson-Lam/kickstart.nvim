@@ -1099,7 +1099,15 @@ require('lazy').setup({
       require('copilot').setup {}
     end,
   },--]]
-
+  {
+    'glebzlat/arduino-nvim',
+    config = {
+      function()
+        require('arduino-nvim').setup()
+      end,
+      filetype = 'arduino',
+    },
+  },
   --[[{
     'CopilotC-Nvim/CopilotChat.nvim',
     dependencies = {
