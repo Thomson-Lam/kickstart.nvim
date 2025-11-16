@@ -1065,7 +1065,13 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>a', ':TestSuite<CR>')
       vim.keymap.set('n', '<leader>l', ':TestLast<CR>')
       vim.keymap.set('n', '<leader>g', ':TestVisit<CR>')
-      vim.cmd "let test#strategy = 'vimux'" -- TODO: Test vimux usgae
+      vim.cmd "let test#strategy = 'vimux'" -- TODO: Test vimux usage
+      -- vim.cmd "let g:VimuxRunnerTarget = 'current-tab'"
+      --      vim.cmd 'let g:test#neovim_sticky#use_existing = 0'
+      --      vim.cmd ' let g:test#preserve_screen = 0'
+      vim.cmd "let test#strategy = 'neovim_sticky'"
+      vim.cmd "let test#neovim#term_position = 'belowright'"
+      vim.cmd 'let g:test#neovim#start_normal = 1'
     end,
   },
   { -- Vim Tmux navigation
